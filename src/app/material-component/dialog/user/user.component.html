@@ -1,0 +1,57 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout='row'>
+        <span class="titel"> user</span>
+    </mat-toolbar-row>
+
+</mat-toolbar>
+ <form [formGroup]="userForm">
+<div mat-dialog-content class="mat-typography">
+   
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" required>
+
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>email</mat-label>
+                    <input matInput formControlName="email" required type="email">
+
+                </mat-form-field>
+               
+                
+            </div>
+            <div fxLayout="row wrap" >
+                <mat-form-field appearance="fill" fxFlex *ngIf="flag">
+                    <mat-label>password</mat-label>
+                    <input matInput formControlName="password" required type="password">
+
+                </mat-form-field>
+                <mat-form-field appearnce="fill" fxFlex>
+                    <mat-label>role </mat-label>
+                    <mat-select matInput formControlName="role" required>
+                        <mat-option value="admin">admin</mat-option>
+                        <mat-option value="emp">emp</mat-option>
+                        <mat-option value="coustomer">coustomer</mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+                
+            </div>
+          
+
+        </div>
+
+   
+
+</div> </form>
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" type="submit"
+    (click)="handleSubmit()"
+    >{{action}}</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+</mat-dialog-actions>
+

@@ -1,0 +1,129 @@
+<mat-card>
+    <b><span>Mange Order</span></b>
+    <button mat-flat-button color="primary" class="float-right" (click)="submitAction()"
+    [disabled]="validateSubmit()"
+    >Submit & Get Bill</button>
+</mat-card>
+<hr>
+<mat-card>
+    <b><span>Customer Details:</span></b>
+    <form [formGroup]="manageOrderForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap" fxFlex>
+                <mat-form-field appearnce="fill" fxFlex>
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" required>
+
+                </mat-form-field>
+                <mat-form-field appearnce="fill" fxFlex>
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" required>
+
+                </mat-form-field>
+                <mat-form-field appearnce="fill" fxFlex>
+                    <mat-label>Contact Number</mat-label>
+                    <input matInput formControlName="contactNumber" required>
+
+                </mat-form-field>
+                <mat-form-field appearnce="fill" fxFlex>
+                    <mat-label>Payment Method </mat-label>
+                    <mat-select matInput formControlName="paymentMethod" required>
+                        <mat-option value="Cash">Cash</mat-option>
+                        <mat-option value="Credit">Credit</mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+                
+            </div>
+        </div>
+    </form>
+</mat-card>
+<hr>
+<b><span>Select Product:</span></b>
+<mat-card>
+<form [formGroup]="manageOrderForm">
+    <div fxFlex fxLayout="column">
+        <div fxLayout="row wrap">
+            <mat-form-field appearance="fill" fxFlex> 
+                 <mat-label>Category</mat-label>
+            <mat-select formControlName="category" (selectionChange)="getproductByCategory($event.value)">
+                <mat-option *ngFor="let item of category" [value]="item">{{item}}</mat-option>
+            </mat-select></mat-form-field>
+            <mat-form-field appearance="fill" fxFlex> 
+                <mat-label>Product</mat-label>
+           <mat-select formControlName="product" (selectionChange)="getProductDetails($event.value)">
+               <mat-option *ngFor="let item of products" [value]="item">{{item.title}}</mat-option>
+           </mat-select>
+    
+          
+          
+           
+   
+        </mat-form-field>
+        <mat-form-field appearance="fill" fxFlex> 
+            <mat-label>Product</mat-label>
+            <input matInput formControlName="product" required [(ngModel)]="value" #input (keyup)="getproductid()" (keyup.enter)="add()">
+          
+           
+   
+        </mat-form-field>
+           <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>price</mat-label>
+                    <input matInput formControlName="price" required readonly>
+
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>quantity</mat-label>
+                    <input matInput formControlName="quantity" required (keyup)="setQuantity($event)" #input>
+
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>total</mat-label>
+                    <input matInput formControlName="total" required readonly>
+
+                </mat-form-field>
+          
+        </div>
+    </div>
+</form>
+<div>
+    <button mat-flat-button color="primary"  (click)="getproductid()">Add</button>
+    <button mat-flat-button color="primary" [disabled]="validateProductAdd()" (click)="add()">Add</button>
+    <button mat-flat-button color="primary" class="float-right">Total Amount: {{totalAmount}} </button>
+</div>
+</mat-card>
+<hr>
+<div class="responsive_table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>title</th>
+        <td mat-cell *matCellDef="let element">{{element.title}}</td>
+      </ng-container> 
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>Category</th>
+        <td mat-cell *matCellDef="let element">{{element.category}}</td>
+      </ng-container> 
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let element">{{element.price}}</td>
+      </ng-container> 
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>quantity</th>
+        <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
+      </ng-container> 
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef>total</th>
+        <td mat-cell *matCellDef="let element">{{element.total}}</td>
+      </ng-container> 
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef>Delete</th>
+        <td mat-cell *matCellDef="let element ;let i=index" class="action-link">
+            <button mat-icon-button color="primary" matTooltip="Delete" (click)="handleDeleteAction(i,element)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+      </ng-container>  
+      <tr mat-header-row *matHeaderRowDef="displayColumns; sticky:true"></tr>
+      <tr mat-row *matRowDef="let row;columns:displayColumns"></tr>
+    </table>
+</div>
